@@ -1,4 +1,4 @@
-import { MoveRight, PhoneCall } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import { Button } from "../primitives/button";
 import Link from "next/link";
 
@@ -33,7 +33,7 @@ export const Hero = () => (
           {/* <Button size="lg" className="gap-4" variant="outline">
             Let us work together. <PhoneCall className="w-4 h-4" />
           </Button> */}
-
+          c
           <Link href="https://github.com/dudouz">
             <Button size="lg" className="gap-4">
               Take a look at my latest projects{" "}
