@@ -1,13 +1,13 @@
 import { Header } from "@/core/header";
 import { Layout } from "@/core/layout";
 import { Resume } from "./resume";
-
-export const ResumePage = () => {
+import { ResumeData } from "../page";
+export const ResumePage = ({ resume }: { resume: ResumeData }) => {
   return (
     <Layout>
       <Header title="Eduardo Iotti" />
 
-      <Resume />
+      <Resume resume={resume} />
     </Layout>
   );
 };
