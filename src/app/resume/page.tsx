@@ -2,7 +2,7 @@ import { ResumePage } from "./components";
 
 export interface ResumeData {
   experiences: ResumeEntry[];
-  summary?: string;
+  info?: ResumeInfo;
 }
 
 interface ResumeEntry {
@@ -17,24 +17,57 @@ interface ResumeEntry {
   activities: { activity: string; id: string }[];
 }
 
-export default async function Resume() {
+type ListItem = {
+  title: string;
+  date: string;
+  description: string;
+};
+
+type ProfileLink = {
+  title: string;
+  url: string;
+};
+
+export interface ResumeInfo {
+  jobTitle: string;
+  summary: string;
+  image: string;
+  profileLinks: ProfileLink[];
+  certifications: ListItem[];
+  education: ListItem[];
+  pastExperiences?: ListItem[];
+}
+
+async function getExperiences() {
   const response = await fetch(
     "http://127.0.0.1:1337/api/resume-experiences?populate=*"
   );
   const { data: experiences }: { data: ResumeEntry[] } = await response.json();
 
-  // const summaryResponse = await fetch(
-  //   "http://127.0.0.1:1337/api/resume-summary/"
-  // );
-  // const { data: summary }: { data: string } = await summaryResponse.json();
+  return experiences;
+}
 
-  // console.log(summary);
+async function getResumeInfo() {
+  const response = await fetch(
+    "http://127.0.0.1:1337/api/resume-info?populate=*"
+  );
+
+  const { data: resumeInfo }: { data: ResumeInfo } = await response.json();
+
+  return resumeInfo;
+}
+
+export default async function Resume() {
+  const [experiences, info] = await Promise.all([
+    getExperiences(),
+    getResumeInfo(),
+  ]);
 
   return (
     <ResumePage
       resume={{
         experiences,
-        // summary
+        info,
       }}
     />
   );

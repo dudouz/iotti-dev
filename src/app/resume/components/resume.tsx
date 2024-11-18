@@ -11,53 +11,41 @@ export const Resume = ({ resume }: { resume: ResumeData }) => {
       <div className="container max-w-6xl mx-auto">
         <div className="flex flex-col gap-16 py-20 lg:py-40">
           {/* Header Section */}
-          <div className="flex flex-col gap-6 items-center text-center">
+          <section className="flex flex-col gap-6 items-center text-center">
             <h1 className="text-4xl md:text-5xl font-semibold tracking-tighter">
               Eduardo Iotti
             </h1>
             <p className="text-xl text-muted-foreground">
-              Senior Software Engineer
+              {resume.info?.jobTitle}
             </p>
             <div className="flex gap-4">
-              <Button variant="outline" size="sm" asChild>
-                <a
-                  href="https://www.linkedin.com/in/eduardoiotti/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2"
-                >
-                  LinkedIn <ExternalLink className="w-4 h-4" />
-                </a>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <a
-                  href="https://github.com/dudouz"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2"
-                >
-                  GitHub <ExternalLink className="w-4 h-4" />
-                </a>
-              </Button>
+              {resume.info?.profileLinks.map((link) => (
+                <Button key={link.url} variant="outline" size="sm" asChild>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    {link.title} <ExternalLink className="w-4 h-4" />
+                  </a>
+                </Button>
+              ))}
             </div>
-          </div>
+          </section>
 
           {/* Summary Section */}
-          <div className="flex flex-col gap-6">
+          <section className="flex flex-col gap-6">
             <div>
               <Badge>Summary</Badge>
             </div>
             <p className="text-lg leading-relaxed tracking-tight text-muted-foreground">
-              Senior software engineer based in Brazil, with 6+ years of
-              experience with front-end development and 10+ years of experience
-              in the web industry. I have been developing and delivering web
-              apps, using TypeScript and React, together with front-end
-              frameworks such as NextJS.
+              {resume.info?.summary}
             </p>
-          </div>
+          </section>
 
           {/* Experience Section */}
-          <div className="flex flex-col gap-8">
+          <section className="flex flex-col gap-8">
             <div>
               <Badge>Work Experience</Badge>
             </div>
@@ -75,7 +63,7 @@ export const Resume = ({ resume }: { resume: ResumeData }) => {
                       </span>
 
                       <span className="text-sm text-muted-foreground">
-                        {entry.startDate} -{" "}
+                        {entry.startDate} -
                         {entry.currentlyWorking ? "Present" : entry.endDate} ·
                         {entry.location}
                       </span>
@@ -103,51 +91,58 @@ export const Resume = ({ resume }: { resume: ResumeData }) => {
                 <hr />
               </div>
             ))}
-          </div>
+          </section>
 
           {/* Education Section */}
-          <div className="flex flex-col gap-6">
+          <section className="flex flex-col gap-6">
             <div>
               <Badge>Education</Badge>
             </div>
             <div className="grid gap-4">
-              <div className="flex flex-col gap-1">
-                <h3 className="text-lg font-medium">
-                  MBA in Software Engineering
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  PUC-Rio · 2023-2024
-                </p>
-              </div>
-              <div className="flex flex-col gap-1">
-                <h3 className="text-lg font-medium">
-                  Nanodegree in Digital Marketing
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Udacity · 2018-2019
-                </p>
-              </div>
-              <div className="flex flex-col gap-1">
-                <h3 className="text-lg font-medium">
-                  Bachelor of Arts in Advertising
-                </h3>
-                <p className="text-sm text-muted-foreground">UCS · 2006-2011</p>
-              </div>
+              {resume.info?.education.map((item) => (
+                <div key={item.title} className="flex flex-col gap-1">
+                  <h3 className="text-lg font-medium">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {item.description} · {item.date}
+                  </p>
+                </div>
+              ))}
             </div>
-          </div>
+          </section>
 
           {/* Certifications Section */}
-          <div className="flex flex-col gap-6">
+          <section className="flex flex-col gap-6">
             <div>
               <Badge>Certifications</Badge>
             </div>
             <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-              <li>Clean Architecture - Rodrigo Branas (2022)</li>
-              <li>Software Architecture Full Cycle (2022)</li>
-              <li>Continuous Integration Full Cycle (2022)</li>
-              <li>Domain-Driven Design Full Cycle (2021)</li>
+              {resume.info?.certifications.map((item) => (
+                <li key={item.title}>
+                  {item.title} - {item.description} ({item.date})
+                </li>
+              ))}
             </ul>
-          </div>
+          </section>
+
+          {/* Past Experiences and Aditional info Section */}
+          {resume.info?.pastExperiences && (
+            <section className="flex flex-col gap-6">
+              <div>
+                <Badge>Past Experiences</Badge>
+              </div>
+              <div className="grid gap-4">
+                {resume.info?.pastExperiences.map((item) => (
+                  <div key={item.title} className="flex flex-col gap-1">
+                    <h3 className="text-lg font-medium">{item.title}</h3>
+                    <span>{item.date}</span>
+                    <p className="text-sm text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </div>
