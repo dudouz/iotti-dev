@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/core/theme-provider";
+import { Toaster } from "@/core/primitives/toaster";
 import GoogleAnalytics from "@/app/google-analytics";
 
 const geistSans = localFont({
@@ -42,7 +43,7 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
-
+        <Toaster />
         <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID!} />
       </body>
     </html>

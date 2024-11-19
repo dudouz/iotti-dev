@@ -1,62 +1,100 @@
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+"use client";
 
-import { CalendarIcon, MoveRight } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { MoveRight } from "lucide-react";
 
 import { Label } from "../primitives/label";
 import { Button } from "../primitives/button";
-import { Popover, PopoverContent, PopoverTrigger } from "../primitives/popover";
-import { Calendar } from "../primitives/calendar";
+
 import { Input } from "../primitives/input";
-import { format } from "date-fns";
+import { Textarea } from "../primitives/textarea";
+import {
+  ContactFormSchema,
+  FIELD_NAME,
+  FormFields,
+  FormData,
+  FIELD_EMAIL,
+  FIELD_MESSAGE,
+  errorMessages,
+} from "./contact.schema";
+import { Resend } from "resend";
+
+const FORM_ID = "contact-form";
 
 export const ContactForm = () => {
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
+
+  const {
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(ContactFormSchema),
+  });
+
+  const onSubmit = (data: FormData) => {
+    resend.emails.send({
+      from: "contact@iotti.dev",
+      to: "ddz.iotti@gmail.com",
+      subject: `Message from: ${data.name} [iotti.dev]`,
+      html: `<p>Name: ${data.name}</p><p>Email: ${data.email} </p> <p>${data.message}</p>`,
+    });
+  };
+
   return (
     <div className="justify-center flex items-center">
-      <div className="rounded-md max-w-sm flex flex-col border p-8 gap-4">
-        <p>Book a meeting</p>
-        <div className="grid w-full max-w-sm items-center gap-1">
-          <Label htmlFor="picture">Date</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-full max-w-sm justify-start text-left font-normal",
-                  !date && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "PPP") : <span>Pick a date</span>}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar
-                mode="single"
-                selected={date}
-                onSelect={setDate}
-                initialFocus
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
-        <div className="grid w-full max-w-sm items-center gap-1">
-          <Label htmlFor="firstname">First name</Label>
-          <Input id="firstname" type="text" />
-        </div>
-        <div className="grid w-full max-w-sm items-center gap-1">
-          <Label htmlFor="lastname">Last name</Label>
-          <Input id="lastname" type="text" />
-        </div>
-        <div className="grid w-full max-w-sm items-center gap-1">
-          <Label htmlFor="picture">Upload resume</Label>
-          <Input id="picture" type="file" />
-        </div>
+      <div className="rounded-md max-w-sm flex flex-col border p-8 gap-4 min-w-[600px]">
+        <p>I&apos;m open to work, let&apos;s connect</p>
 
-        <Button className="gap-4 w-full">
-          Book the meeting <MoveRight className="w-4 h-4" />
-        </Button>
+        <form
+          id={FORM_ID}
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full flex flex-col items-center gap-4"
+        >
+          <div className="grid w-full items-center gap-1">
+            <Label htmlFor="name">Your name</Label>
+            <Input
+              {...FormFields.FIELD_NAME}
+              onChange={(e) => setValue(FIELD_NAME, e.currentTarget.value)}
+            />
+            {errors[FIELD_NAME] && (
+              <span className="text-xs text-red-600">
+                {errorMessages.FIELD_NAME}
+              </span>
+            )}
+          </div>
+
+          <div className="grid w-full items-center gap-1">
+            <Label htmlFor="email">E-mail</Label>
+            <Input
+              {...FormFields.FIELD_EMAIL}
+              onChange={(e) => setValue(FIELD_EMAIL, e.currentTarget.value)}
+            />
+            {errors[FIELD_EMAIL] && (
+              <span className="text-xs text-red-600">
+                {errorMessages.FIELD_EMAIL}
+              </span>
+            )}
+          </div>
+
+          <div className="grid w-full items-center gap-1">
+            <Label htmlFor="message">Leave a message</Label>
+            <Textarea
+              {...FormFields.FIELD_MESSAGE}
+              onChange={(e) => setValue(FIELD_MESSAGE, e.currentTarget.value)}
+            />
+            {errors[FIELD_MESSAGE] && (
+              <span className="text-xs text-red-600">
+                {errorMessages.FIELD_MESSAGE}
+              </span>
+            )}
+          </div>
+          <Button className="gap-4 w-full" type="submit">
+            Send message <MoveRight className="w-4 h-4" />
+          </Button>
+        </form>
       </div>
     </div>
   );
