@@ -125,24 +125,25 @@ export const Resume = ({ resume }: { resume: ResumeData }) => {
           </section>
 
           {/* Past Experiences and Aditional info Section */}
-          {resume.info?.pastExperiences && (
-            <section className="flex flex-col gap-6">
-              <div>
-                <Badge>Past Experiences</Badge>
-              </div>
-              <div className="grid gap-4">
-                {resume.info?.pastExperiences.map((item) => (
-                  <div key={item.title} className="flex flex-col gap-1">
-                    <h3 className="text-lg font-medium">{item.title}</h3>
-                    <span>{item.date}</span>
-                    <p className="text-sm text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
+          {resume.info?.pastExperiences &&
+            resume.info?.pastExperiences?.length > 0 && (
+              <section className="flex flex-col gap-6">
+                <div>
+                  <Badge>Past Experiences</Badge>
+                </div>
+                <div className="grid gap-4">
+                  {resume.info?.pastExperiences.map((item) => (
+                    <div key={item.title} className="flex flex-col gap-1">
+                      <h3 className="text-lg font-medium">{item.title}</h3>
+                      <span>{item.date}</span>
+                      <p className="text-sm text-muted-foreground">
+                        {item.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
         </div>
       </div>
     </div>
