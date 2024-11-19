@@ -1,6 +1,6 @@
-// import { SkillsHighlight } from "./skills-highlight";
+import { SkillsHighlight } from "./skills-highlight";
 import { ContactHeader } from "./contact-header";
-import { ContactForm } from "./contact-form";
+// import { ContactForm } from "./contact-form";
 
 export const Contact = () => {
   return (
@@ -9,10 +9,11 @@ export const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-10">
           <ContactHeader />
 
-          <ContactForm />
-        </div>
+          <SkillsHighlight />
 
-        {/* <SkillsHighlight /> */}
+          {/* Disabled until SSR is figured out */}
+          {/* <ContactForm /> */}
+        </div>
       </div>
     </div>
   );
