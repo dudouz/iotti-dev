@@ -1,0 +1,62 @@
+.animate-gradient-mask {
+  --gradient-angle: 90deg;
+  --mouse-distance: 0;
+  --gradient-transition-speed: 0.2s;
+  --gradient-x-position: 50%;
+  --gradient-y-position: 50%;
+  --scroll-progress: 0;
+
+  color: transparent;
+  background-image: linear-gradient(
+    var(--gradient-angle),
+    #1a0001 calc(0% + (var(--mouse-distance) * 50%)),
+    #081301 calc(25% + (var(--mouse-distance) * 25%)),
+    #7000cc 50%,
+    #fbbf24 calc(75% - (var(--mouse-distance) * 25%)),
+    #94361f calc(100% - (var(--mouse-distance) * 50%))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 400% 400%;
+  background-position: calc(
+      var(--gradient-x-position) + (var(--scroll-progress) * 100%)
+    )
+    var(--gradient-y-position);
+  transition: background-position var(--gradient-transition-speed) ease,
+    background-image var(--gradient-transition-speed) ease;
+}
+
+:is(.dark .animate-gradient-mask) {
+  background-image: linear-gradient(
+    var(--gradient-angle),
+    #d8bdbe calc(0% + (var(--mouse-distance) * 50%)),
+    #5de700 calc(25% + (var(--mouse-distance) * 25%)),
+    #bd90e3 50%,
+    #ca8a04 calc(75% - (var(--mouse-distance) * 25%)),
+    #cc575f calc(100% - (var(--mouse-distance) * 50%))
+  );
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-mask:not(:hover) {
+  animation: gradientMove 6s ease infinite;
+}
+
+.delay-100 {
+  transition-delay: 100ms;
+}
+
+.delay-200 {
+  transition-delay: 200ms;
+}

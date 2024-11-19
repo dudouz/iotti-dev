@@ -1,7 +1,6 @@
-"use client";
-
 import { Check } from "lucide-react";
 import { Badge } from "@/core/primitives/badge";
+import { AnimatedHeadline } from "../hero/animated-headline";
 
 export const Contact = () => {
   return (
@@ -14,9 +13,12 @@ export const Contact = () => {
                 <Badge>Front-end Engineer</Badge>
               </div>
               <div className="flex flex-col gap-2">
-                <h4 className="text-3xl md:text-5xl tracking-tighter max-w-xl text-left font-regular">
-                  Fast, Scalable Web Solutions with TypeScript and NextJS
-                </h4>
+                <AnimatedHeadline
+                  tag="h4"
+                  headline="Fast, Scalable Web Solutions with TypeScript and NextJS"
+                  className="text-3xl md:text-5xl tracking-tighter max-w-xl text-left font-regular"
+                />
+
                 <p className="text-lg leading-relaxed tracking-tight text-muted-foreground max-w-sm text-left">
                   I focus on building scalable, high-performance web
                   applications using React, TypeScript, NextJS, and TailwindCSS,
