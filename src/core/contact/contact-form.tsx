@@ -19,13 +19,10 @@ import {
   FIELD_MESSAGE,
   errorMessages,
 } from "./contact.schema";
-import { Resend } from "resend";
 
 const FORM_ID = "contact-form";
 
 export const ContactForm = () => {
-  const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
-
   const {
     handleSubmit,
     setValue,
@@ -34,13 +31,19 @@ export const ContactForm = () => {
     resolver: zodResolver(ContactFormSchema),
   });
 
-  const onSubmit = (data: FormData) => {
-    resend.emails.send({
-      from: "contact@iotti.dev",
-      to: "ddz.iotti@gmail.com",
-      subject: `Message from: ${data.name} [iotti.dev]`,
-      html: `<p>Name: ${data.name}</p><p>Email: ${data.email} </p> <p>${data.message}</p>`,
-    });
+  const onSubmit = async (data: FormData) => {
+    try {
+      await fetch("/api/send", {
+        method: "POST",
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          message: data.message,
+        }),
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
