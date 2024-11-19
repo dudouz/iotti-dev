@@ -35,10 +35,10 @@ This is my personal website and portfolio, developed with modern technologies to
 
 ```bash
 # Clone this repository
-git clone https://github.com/your-username/your-portfolio
+git clone https://github.com/dudouz/iotti-dev
 
 # Install dependencies
-npm install
+npm install --legacy-peer-deps
 
 # Run the development server
 npm run dev
