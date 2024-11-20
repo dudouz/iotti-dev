@@ -14,8 +14,9 @@ type ExtendedNextApiRequest = NextRequest["body"] & {
   };
 };
 
-export const POST = async (req: NextApiRequest) => {
-  const { name, email, message } = req.body as ExtendedNextApiRequest["body"];
+export const POST = async (req: NextRequest) => {
+  const { name, email, message } =
+    req.body as unknown as ExtendedNextApiRequest["body"];
 
   const { data, error } = await resend.emails.send({
     from: "Iotti.dev <contact@iotti.dev>",
