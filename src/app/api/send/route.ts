@@ -1,5 +1,4 @@
 import { EmailTemplate } from "@/core/contact/email-template";
-import { NextApiRequest } from "next";
 import { NextResponse, NextRequest } from "next/server";
 
 import { Resend } from "resend";
