@@ -15,15 +15,13 @@ interface ExtendedNextApiRequest extends NextApiRequest {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export const POST = async (req: ExtendedNextApiRequest) => {
-  const { name, email, message } = req.body;
-
-  console.log("sending email");
+export const POST = async (req: NextApiRequest) => {
+  const { name, email, message } = req.body as ExtendedNextApiRequest["body"];
 
   const { data, error } = await resend.emails.send({
-    from: "Acme <onboarding@resend.dev>",
-    to: ["delivered@resend.dev"],
-    subject: "Hello world",
+    from: "Iotti.dev <contact@iotti.dev>",
+    to: ["ddz.iotti@gmail.com"],
+    subject: `Contact from ${name} - ${email} [iotti.dev]`,
     react: EmailTemplate({ name, email, message }),
   });
 
