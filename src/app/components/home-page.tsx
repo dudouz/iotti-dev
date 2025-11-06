@@ -2,7 +2,7 @@ import { Contact } from "@/core/contact";
 import { Header } from "@/core/header";
 import { Hero } from "@/core/hero";
 import { Layout } from "@/core/layout/layout";
-import { AboutData } from "../page";
+import { AboutData } from "@/lib/types";
 
 export const HomePage = ({ about }: { about: AboutData }) => {
   return (

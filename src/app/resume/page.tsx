@@ -1,67 +1,34 @@
+"use client";
+
 import { ResumePage } from "./components";
+import { useResumeExperiences, useResumeInfo } from "@/lib/hooks/use-resume";
 
-export interface ResumeData {
-  experiences: ResumeEntry[];
-  info?: ResumeInfo;
-}
+export default function Resume() {
+  const { data: experiences, isLoading: isLoadingExperiences, error: experiencesError } = useResumeExperiences();
+  const { data: info, isLoading: isLoadingInfo, error: infoError } = useResumeInfo();
 
-interface ResumeEntry {
-  position: string;
-  company: string;
-  location: string;
-  startDate: string;
-  currentlyWorking: boolean;
-  endDate: string;
-  description: string;
-  relatedKeywords: { keyword: string; id: string }[];
-  activities: { activity: string; id: string }[];
-}
+  const isLoading = isLoadingExperiences || isLoadingInfo;
+  const error = experiencesError || infoError;
 
-type ListItem = {
-  title: string;
-  date: string;
-  description: string;
-};
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
-type ProfileLink = {
-  title: string;
-  url: string;
-};
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Error loading data: {error.message}</p>
+      </div>
+    );
+  }
 
-export interface ResumeInfo {
-  jobTitle: string;
-  summary: string;
-  image: string;
-  profileLinks: ProfileLink[];
-  certifications: ListItem[];
-  education: ListItem[];
-  pastExperiences?: ListItem[];
-}
-
-async function getExperiences() {
-  const response = await fetch(
-    "http://127.0.0.1:1337/api/resume-experiences?populate=*"
-  );
-  const { data: experiences }: { data: ResumeEntry[] } = await response.json();
-
-  return experiences;
-}
-
-async function getResumeInfo() {
-  const response = await fetch(
-    "http://127.0.0.1:1337/api/resume-info?populate=*"
-  );
-
-  const { data: resumeInfo }: { data: ResumeInfo } = await response.json();
-
-  return resumeInfo;
-}
-
-export default async function Resume() {
-  const [experiences, info] = await Promise.all([
-    getExperiences(),
-    getResumeInfo(),
-  ]);
+  if (!experiences) {
+    return null;
+  }
 
   return (
     <ResumePage

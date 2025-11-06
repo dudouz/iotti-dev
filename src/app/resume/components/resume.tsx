@@ -3,7 +3,7 @@
 import { Badge } from "@/core/primitives/badge";
 import { Button } from "@/core/primitives/button";
 import { ExternalLink } from "lucide-react";
-import { ResumeData } from "../page";
+import { ResumeData } from "@/lib/types";
 
 export const Resume = ({ resume }: { resume: ResumeData }) => {
   return (
@@ -50,7 +50,7 @@ export const Resume = ({ resume }: { resume: ResumeData }) => {
               <Badge>Work Experience</Badge>
             </div>
 
-            {resume.experiences.map((entry) => (
+            {resume.experiences && resume.experiences.length > 0 && resume.experiences.map((entry) => (
               <div key={entry.company} className="flex flex-col gap-8">
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-1">

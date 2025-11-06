@@ -1,19 +1,30 @@
+"use client";
+
 import { HomePage } from "./components/home-page";
+import { useAbout } from "@/lib/hooks/use-about";
 
-export interface AboutData {
-  articleLink: string;
-  articleTitle: string;
-  ctaButtonLink: string;
-  ctaButtonTitle: string;
-  heroDescription: string;
-  mainHeadline: string;
-  subTitle: string;
-}
+export default function Home() {
+  const { data, isLoading, error } = useAbout();
 
-export default async function Home() {
-  const response = await fetch("http://127.0.0.1:1337/api/about/");
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
-  const { data }: { data: AboutData } = await response.json();
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Error loading data: {error.message}</p>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return null;
+  }
 
   return <HomePage about={data} />;
 }

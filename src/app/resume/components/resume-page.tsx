@@ -1,7 +1,7 @@
 import { Header } from "@/core/header";
 import { Layout } from "@/core/layout";
 import { Resume } from "./resume";
-import { ResumeData } from "../page";
+import { ResumeData } from "@/lib/types";
 export const ResumePage = ({ resume }: { resume: ResumeData }) => {
   return (
     <Layout>

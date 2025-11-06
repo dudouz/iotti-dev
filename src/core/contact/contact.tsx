@@ -1,6 +1,6 @@
 import { SkillsHighlight } from "./skills-highlight";
 import { ContactHeader } from "./contact-header";
-// import { ContactForm } from "./contact-form";
+import { ContactForm } from "./contact-form";
 
 export const Contact = () => {
   return (
@@ -11,8 +11,7 @@ export const Contact = () => {
 
           <SkillsHighlight />
 
-          {/* Disabled until SSR is figured out */}
-          {/* <ContactForm /> */}
+          <ContactForm />
         </div>
       </div>
     </div>

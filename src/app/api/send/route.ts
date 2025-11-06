@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
+const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY || "placeholder");
 
 type ExtendedNextApiRequest = NextRequest["body"] & {
   body: {
