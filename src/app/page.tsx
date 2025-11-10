@@ -1,30 +1,8 @@
-"use client";
-
 import { HomePage } from "./components/home-page";
-import { useAbout } from "@/lib/hooks/use-about";
+import { getAboutData } from "@/lib/api";
 
-export default function Home() {
-  const { data, isLoading, error } = useAbout();
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Error loading data: {error.message}</p>
-      </div>
-    );
-  }
-
-  if (!data) {
-    return null;
-  }
+export default async function Home() {
+  const data = await getAboutData();
 
   return <HomePage about={data} />;
 }

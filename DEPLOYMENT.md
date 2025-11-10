@@ -70,7 +70,64 @@ For the Next.js build to connect to your Strapi instance, create a `.env.local` 
 NEXT_PUBLIC_STRAPI_URL=http://127.0.0.1:1337
 ```
 
-## Local Testing on Mac
+## Local Testing with Docker (Recommended)
+
+The easiest way to test locally is using Docker, which simulates the production environment with nginx and PHP 7.4.
+
+### Prerequisites
+
+- Docker and Docker Compose installed
+- Resend API key in `config.php`
+
+### Quick Start
+
+1. **Build the Next.js site**:
+```bash
+pnpm build
+```
+
+2. **Start the Docker containers**:
+```bash
+docker-compose up
+```
+
+3. **Open your browser**:
+```
+http://localhost:8080
+```
+
+4. **Stop the containers**:
+```bash
+docker-compose down
+```
+
+### What's Running
+
+- **nginx**: Serves the static files on port 8080
+- **PHP 7.4-FPM**: Handles the contact form PHP endpoint
+- Both containers share the `out/` directory and `config.php`
+
+### Rebuilding
+
+If you make changes to the site:
+
+```bash
+# Rebuild Next.js
+pnpm build
+
+# Restart containers (Docker Compose automatically picks up changes)
+docker-compose restart
+```
+
+If you modify the Dockerfile:
+
+```bash
+docker-compose up --build
+```
+
+---
+
+## Local Testing on Mac (Without Docker)
 
 You can test the contact form locally before deploying:
 

@@ -15,10 +15,16 @@ This is my personal website and portfolio, developed with modern technologies to
 - [Tailwind CSS](https://tailwindcss.com/) - Styling
 - [ShadCN UI](https://ui.shadcn.com/) - Headless UI components
 
+### State Management & Data Fetching
+
+- [React Query](https://tanstack.com/query) - Server state management and caching
+- [React Hook Form](https://react-hook-form.com/) - Form validation
+
 ### Features
 
 - [Next Themes](https://github.com/pacocoursey/next-themes) - Dark/Light mode
 - [date-fns](https://date-fns.org/) - Date formatting
+- [Resend](https://resend.com/) - Email delivery
 
 ## ✨ Key Features
 
@@ -30,21 +36,51 @@ This is my personal website and portfolio, developed with modern technologies to
 - 🎭 Interactive UI components
 - 📊 Google Analytics integration
 - 💫 Smooth animations and transitions
+- 📧 Contact form with PHP backend
+- 🔄 Client-side data fetching with React Query
 
 ## 🚀 Getting Started
+
+### Development
 
 ```bash
 # Clone this repository
 git clone https://github.com/dudouz/iotti-dev
 
 # Install dependencies
-npm install --legacy-peer-deps
+pnpm install
 
 # Run the development server
-npm run dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Testing with Docker (Recommended)
+
+Test the full production setup locally with nginx and PHP:
+
+```bash
+# Build the Next.js site
+pnpm build
+
+# Start Docker containers
+docker-compose up
+
+# Open http://localhost:8080 in your browser
+
+# Stop containers
+docker-compose down
+```
+
+This runs nginx with PHP 7.4-FPM, simulating the production environment.
+
+### Deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment instructions including:
+- Production deployment to VPS with nginx
+- PHP configuration for contact form
+- Environment variables setup
 
 ## 📝 License
 
