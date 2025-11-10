@@ -14,7 +14,7 @@ export async function getAboutData(): Promise<AboutData> {
 
 export async function getResumeExperiences(): Promise<ResumeEntry[]> {
   const response = await fetch(
-    `${API_BASE_URL}/api/resume-experiences?populate=*`
+    `${API_BASE_URL}/api/resume-experiences?populate=*&sort=rank:asc`
   );
 
   if (!response.ok) {
